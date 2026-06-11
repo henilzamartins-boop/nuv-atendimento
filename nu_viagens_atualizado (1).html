@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nu Viagens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css"/>
+
+<!-- BASE DE CONHECIMENTO (fora do JS para suportar acentuação) -->
+<script type="text/kb" id="kbData">
+Você é um assistente de atendimento. Responda EXCLUSIVAMENTE com base nas informações desta base de conhecimento.
+
+REGRAS ABSOLUTAS:
+1. Use apenas o que está explícito aqui. Proibido conhecimento externo ou inferências.
+2. Se não houver informação suficiente, responda: Não encontrei informação suficiente na base de conhecimento para responder com segurança.
+3. Sempre responda em dois blocos: "Contexto para o agente:" e "Resposta pronta para o cliente:"
+4. Contexto para o agente: apenas orientações desta base. Nunca adicione procedimentos que não estejam aqui.
+5. Resposta ao cliente: sem ferramentas internas, tickets ou macros.
+6. Tom direto, frases curtas, use "você", sem emojis.
+7. Time Especializado: finalize com: "Para tratar deste assunto, precisarei te transferir para o atendimento especializado de Nu Viagens. Basta aguardar aqui que logo menos irão lhe atender."
+8. Nunca orientar o cliente a procurar a companhia aérea diretamente, salvo quando indicado nesta base.
+
+TRANSFERÊNCIA: Chat → macro "UV - Nu Viagens - Transferência para Time Especializado" > submotivo > Transferir > Outro squad/fila > Nu Viagens: Hopper Support > Transferir.
+
+ELEGIBILIDADE: UV com cartão tem acesso. UV Conta (NuInvest) e UV 2.0 têm acesso. Roxinho, cartão adicional UV, Espaço Família, UV família e menores não têm acesso. Nu Viagens só no app.
+
+PAGAMENTO: NuPay exclusivo, crédito até 8x sem juros. Usa limite do cartão de crédito regular. Não utiliza o Limite Adicional do NuPay. Não aceita outros cartões, boleto, Pix. Crédito: 5% cashback + 9 pts/dólar. Débito não gera cashback.
+
+AJUSTE PROPORCIONAL DE PONTOS E CASHBACK: Quando uma reserva de voo ou hotel é cancelada e ocorre reembolso (total ou parcial), os pontos e o cashback acumulados na compra são ajustados proporcionalmente ao valor reembolsado. Caso o cliente já tenha utilizado esses benefícios e não possua saldo suficiente para cobrir a devolução, o saldo ficará temporariamente negativo. Isso é normal, não afeta o score de crédito e será regularizado automaticamente com as próximas compras que gerarem ganhos.
+
+PAGAMENTO — LIMITE: O Nu Viagens usa o mesmo limite do cartão de crédito do cliente. Compras no crédito consomem o limite do cartão de crédito regular. NUNCA usar o termo "cartão adicional" — usar sempre "Limite Adicional do NuPay".
+
+PAGAMENTO — FALHAS:
+- CENÁRIO 1 — Compra aprovada e estornada em seguida: abrir ticket https://nubank.atlassian.net/servicedesk/customer/portal/5604/group/10108/create/27195. As atualizações do chamado chegam pelo e-mail de cadastro do cliente.
+- CENÁRIO 2 — Compra negada sem estorno: verificar limite e barrinha de limite. Verificar também se o cliente pagou a fatura ou ajustou a barrinha há menos de 1 hora (app leva 1h para atualizar). Se persistir: abrir ticket https://nubank.atlassian.net/servicedesk/customer/portal/5604/group/10108/create/27196. As atualizações do chamado chegam pelo e-mail de cadastro do cliente.
+- CENÁRIO 3 — Compra finalizada e estornada repetidas vezes: abrir ticket https://nubank.atlassian.net/servicedesk/customer/portal/5604/group/10108/create/27196. As atualizações do chamado chegam pelo e-mail de cadastro do cliente.
+- Prazo: 3 dias úteis. Time não contata cliente — acompanhar respostas do ticket.
+
+FERRAMENTAS DE PREÇO:
+- Alerta de Preço: pré-compra. Ativar em Buscar voos > "Ativar Alerta". Indisponível em rotas de baixo volume. O atendimento NÃO consegue consultar ou editar alertas dos clientes. Para gerenciar ou excluir, orientar o cliente a: (1) tocar na aba Viagens (ícone de avião); (2) acessar Gerenciar Alertas; (3) tocar no ícone de engrenagem para editar preferências ou no ícone de lixeira para excluir o alerta.
+- Proteção contra Queda: benefício exclusivo para passagens aéreas (não se aplica a hotéis). Ativada apenas quando a compra é feita pela recomendação "Você deve reservar agora" na tela de Previsão de Preço — compras sem essa recomendação não possuem o benefício. Monitora o preço por 30 dias corridos. Reembolso automático via NuPay ao final dos 30 dias, desde que: (1) a queda ocorra dentro do Nu Viagens; (2) a queda seja de no mínimo R$25; (3) o itinerário encontrado seja exatamente o mesmo (mesmo voo, classe tarifária, assento e datas); (4) o cliente não tenha cancelado ou anulado a reserva durante os 30 dias. Máx R$500 por compra. Durante os 30 dias: não prometer reembolso. O monitoramento é 100% automático — o atendimento não tem visibilidade do histórico de variação de preço.
+
+PROTEÇÃO CONTRA QUEDA — APÓS 30 DIAS: Responsável por dúvidas sobre como funciona o benefício ou por cenários onde o crédito não aparece na fatura: Equipe Ultravioleta (UV Interno). Dois cenários possíveis ao fim dos 30 dias: (1) Cliente NÃO recebeu e-mail — não é falha. Significa que o sistema não encontrou queda qualificada (mínimo R$25, mesmo itinerário exato). Comportamento esperado, NÃO abrir ticket. (2) Cliente RECEBEU o e-mail com título "Nu Viagens: o preço do voo comprado caiu e você foi protegido", mas o reembolso não entrou na conta/fatura — nesse caso, abrir ticket no Jira para análise.
+- Garantia Melhor Preço: gratuita, manual, acionar em até 24h. Critérios: (1) reservou pelo Nu Viagens; (2) mesmo itinerário mais barato em outro site em até 24h; (3) preço em BRL com taxas; (4) mesmas características; (5) disponível ao público sem login; (6) site legítimo de venda final (não buscadores). Transferir para Time Especializado para acionar.
+
+RESERVA DE VOOS: O e-mail de confirmação da reserva de voo pode levar de 24h a 72h para ser recebido. Passaporte NÃO solicitado durante a compra no app — só no embarque. Bebê de colo: grátis doméstico, ~10% internacional. Menor sozinho: impossível. Pet: não pelo Nu Viagens. Assentos por trecho/pessoa. Upgrade de cabine: indisponível. Pós-compra: só cia. aérea. PcD: sem desconto, comprar direto com cia.
+
+FLUXO DE COMPRA DE VOO: Ocorre integralmente no app do Nubank. Passo a passo: (1) Busca — cliente acessa Nu Viagens > "Buscar voos", define tipo de viagem (ida e volta, só ida ou multi-destinos), quantidade de viajantes e aeroportos; (2) Datas — calendário com indicação visual de preços (verde = mais barato, laranja = médio, vermelho = mais caro); (3) Escolha dos voos — lista com horários, escalas, cias. e preços; filtros disponíveis; seleciona primeiro ida, depois volta; (4) Serviços opcionais — Remarcação Garantida e Cancelamento Flexível podem ser adicionados ou pulados; (5) Dados dos passageiros — nome, documento, gênero, nacionalidade, programa de fidelidade (opcional) e necessidades de assistência especial; (6) Adicionais — seleção de assentos (cobrados por trecho) e bagagem extra despachada; (7) Pagamento — exclusivamente via NuPay, à vista no débito ou parcelado em até 8x sem juros no crédito; ao finalizar, tela de confirmação é exibida e os detalhes são enviados por e-mail.
+
+CADASTRO DE PASSAGEIROS: A quantidade de viajantes é definida antes da busca, na tela "Editar viajantes", com categorias: Adultos (12+ anos), Crianças (2 a 11 anos), Bebês com assento próprio e Bebês de colo. A tela exibe aviso no rodapé com o limite máximo de passageiros permitido pela ANAC. Após escolher o voo e passar pelos adicionais, o cliente preenche os dados de cada passageiro: nome e sobrenome (exatamente como no documento), data de nascimento, gênero, nacionalidade e CPF. Campos opcionais: programa de fidelidade (cia. + número) e assistência especial (mobilidade, visual, auditiva etc.). Ao fim de cada passageiro: botão roxo para Salvar ou vermelho para Excluir. Adição rápida: clientes recorrentes veem tela "Selecione as pessoas que..." com checkboxes dos passageiros já salvos. Validações: se o número de passageiros cadastrados divergir da busca, o sistema exibe "Você não selecionou o mesmo número de pessoas que procurou"; dados incorretos ou incompletos geram o erro "Passageiros não válidos".
+
+ALTERAÇÃO DE DATA, HORÁRIO OU REMARCAÇÃO DE VOO: Qualquer solicitação de alteração de data, horário ou remarcação de voo deve ser direcionada EXCLUSIVAMENTE ao Time Especializado (Hopper Support). Apenas eles possuem acesso aos sistemas das companhias aéreas para verificar disponibilidade de novos voos, simular custos e realizar a cobrança de multas e diferenças tarifárias. NÃO orientar o cliente a procurar a companhia aérea diretamente nesses casos.
+
+RESERVA DE HOTÉIS: O e-mail de confirmação da reserva de hotel pode levar de 24h a 72h para ser recebido. Pagamento via NuPay, à vista no débito ou parcelado no crédito em até 8x sem juros. "Café disponível" não está incluso na reserva. Hotel não reconhece reserva: Time Especializado. Alteração/cancelamento: Time Especializado.
+
+FLUXO DE RESERVA DE HOTEL: Realizado integralmente no app do Nubank. Passo a passo: (1) Busca — cliente acessa Nu Viagens > "Buscar hotéis"; (2) Definição da estadia — preenche destino, datas de check-in e check-out e número de hóspedes; (3) Lista de resultados — hotéis exibidos com foto, nome, localização, avaliação e preço por noite; (4) Detalhes do hotel — galeria de fotos, descrição, comodidades e botão "Políticas do Hotel" (taxas extras, restrições e regras de cancelamento); (5) Seleção de quarto — cliente escolhe o tipo, com diferenças de preço e políticas exibidas claramente (ex: cancelamento grátis); (6) Revisão — resumo com datas, tipo de quarto, número de hóspedes e valor total; cliente confirma dados dos hóspedes; (7) Pagamento — exclusivamente via NuPay, débito à vista ou crédito em até 8x sem juros; (8) Confirmação — tela de confirmação com número da reserva e e-mail com todos os detalhes enviado ao cliente. Comodidades: resumo exibido na página do hotel; cliente pode tocar "Mostrar mais" para lista completa. Políticas do Hotel: botão disponível na página do hotel, detalha encargos pagos diretamente na propriedade (resort fee, taxas de pets, estacionamento etc.) e regras da acomodação.
+
+CANCELAMENTO: Gratuito: até 24h após compra + voo com 7 dias ou mais de antecedência. Reembolso em até 7 dias corridos. Cancelamento Flexível (CF): 16% a 26%, só no fluxo de compra, cancela até 3h antes, devolve 80% em 7 a 10 dias úteis. Remarcação Garantida (RG): atrasos 2h ou mais ou cancelamento pela cia., mesmo destino, R$11.000/passageiro, acionar em até 24h. NUNCA usar o termo "Reembolso Garantido" — o correto é sempre "Remarcação Garantida".
+
+ESTORNO: Cancelamento padrão gratuito: até 7 dias corridos. CF: 7 a 10 dias úteis. Dentro do prazo: tranquilizar o cliente, NÃO transferir. Prazo vencido sem estorno: transferir para Time Especializado.
+
+VOO ATRASADO/CANCELADO: 1h ou mais — cia. informa. 2h ou mais — alimentação e acomodação. 4h ou mais — reembolso ou reacomodação. Com Remarcação Garantida (RG): usar app. Sem Remarcação Garantida (RG): Time Especializado. No-show cancela trechos seguintes.
+
+SEGURO VIAGEM UV: Gratuito para passagens internacionais com partida no Brasil. Titular NÃO precisa estar na reserva. Se estiver: deve ser o viajante principal. Se não estiver: viajante principal deve ser maior de idade. É o titular quem emite o seguro. Cobre até 6 pessoas por reserva. Definido pelo código da reserva. Emitir antes da viagem pelo link do e-mail. Ida e volta: 60 dias consecutivos. Só ida: 30 dias. Para comprovação de vigência: mostrar regras na própria apólice.
+
+SEGURO VIAGEM UV — ACIONAMENTO EM EMERGÊNCIA: O cliente deve emitir o certificado do Seguro Viagem Ultravioleta antes de acionar a cobertura. Se já possui o certificado, deve entrar em contato pelos canais abaixo:
+1. WhatsApp (todos os destinos): +55 (11) 2185 9680
+2. Telefone (ligação a cobrar de qualquer destino): +55 (11) 2185 9679
+Recomendamos que o cliente salve esses números antes de viajar.
+
+SEGURO VIAGEM UV — MÚLTIPLOS DESTINOS: Não é necessário criar uma apólice para cada passagem aérea. Uma única apólice é suficiente para toda a viagem. O seguro é global e abrange múltiplos destinos e deslocamentos internos no exterior, desde que: (1) a viagem seja internacional e comece no Brasil; (2) a duração total da viagem (ida e volta) não ultrapasse 60 dias após o embarque. A cobertura NÃO está disponível para países e regiões com restrições da OFAC: Coreia do Norte, Cuba, Irã, Síria, Venezuela, Sudão do Norte, Crimeia, República de Donetsk e Luhansk.
+- Erro na emissão: verificar nome igual ao da reserva e tamanho do endereço. Se persistir: ticket https://nubank.atlassian.net/servicedesk/customer/portal/1881/group/4514
+- Dado errado — ainda não viajou: reemitir em https://studio-la.chubb.com/br-nuviagens-travel/
+- Dado errado — já está em viagem: abrir Jira https://nubank.atlassian.net/servicedesk/customer/portal/5604
+
+NOTA FISCAL: UV não emite. Transferir para Time Especializado (Hopper Support).
+
+BILHETE ELETRÔNICO (E-TICKET): Passagens são eletrônicas. Se cliente precisar da numeração de 13 dígitos e não encontrar no e-mail: transferir para Time Especializado.
+
+PASSAPORTE INTERNACIONAL: Maioria dos países exige validade mínima de 6 meses a partir da data de entrada. Alguns exigem 3 a 6 meses além da data de retorno. Se sistema bloquear: explicar a regra dos 6 meses e recomendar consulta no Portal Gov (gov.br) ou consulado do país de destino. Macro sugerida: Conta Global - Doc adulto - Internacional.
+
+DOCUMENTOS: Doméstico: RG, CNH, passaporte ou CTPS. Nu Viagens não emite cartão de embarque. Bagagem perdida: abrir RAB no balcão da cia. antes de sair do aeroporto.
+
+CHECK-IN DE VOOS: O check-in não é feito pelo app do Nubank — o cliente acessa diretamente o site ou app da companhia aérea usando o código localizador da reserva. Geralmente disponível entre 24h e 48h antes do voo, encerrando entre 1h e 2h antes da partida. Ao finalizar, o cartão de embarque é enviado por e-mail ou disponibilizado no app da cia. aérea.
+
+CHECK-IN E CHECK-OUT DE HOTÉIS: Não há informação específica na base de conhecimento sobre a possibilidade de check-in e check-out 100% online pelo app do Nu Viagens. Os horários e procedimentos da hospedagem (early check-in, chegada tardia, taxas etc.) ficam descritos nas Políticas do Hotel, acessíveis na página da acomodação dentro do Nu Viagens.
+</script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f4f8;min-height:100vh}
+.topbar{background:#1a1035;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.tb-brand{display:flex;align-items:center;gap:12px}
+.tb-icon{width:36px;height:36px;border-radius:50%;background:#534AB7;display:flex;align-items:center;justify-content:center}
+.tb-icon i{font-size:18px;color:#EEEDFE}
+.tb-name{font-size:15px;font-weight:500;color:#fff}
+.tb-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-badge{background:rgba(127,119,221,.25);border:1px solid rgba(127,119,221,.45);color:#AFA9EC;font-size:11px;font-weight:500;padding:5px 14px;border-radius:20px;letter-spacing:.04em}
+.tb-hist-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;transition:background .15s}
+.tb-hist-btn:hover{background:rgba(255,255,255,.14)}
+.tb-hist-btn i{font-size:14px}
+.hero-wrap{position:relative;overflow:hidden;background:#120d28;min-height:320px}
+.hero-bg{position:absolute;inset:0}
+.hero-bg canvas{width:100%;height:100%;display:block}
+.hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 24px 70px;text-align:center}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(127,119,221,.2);border:1px solid rgba(127,119,221,.4);color:#CECBF6;font-size:11px;padding:5px 14px;border-radius:20px;margin-bottom:18px;letter-spacing:.04em}
+.hero-title{font-size:36px;font-weight:600;color:#fff;line-height:1.15;margin-bottom:8px}
+.hero-title span{color:#AFA9EC}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:24px;max-width:460px}
+.search-wrap{max-width:580px;width:100%;position:relative}
+.search-wrap textarea{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px 110px 13px 44px;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,background .2s;resize:none;overflow:hidden;min-height:48px;line-height:1.5;display:block}
+.search-wrap textarea::placeholder{color:rgba(255,255,255,.3)}
+.search-wrap textarea:focus{border-color:rgba(127,119,221,.65);background:rgba(255,255,255,.12)}
+.s-icon{position:absolute;left:14px;top:14px;color:rgba(255,255,255,.35);font-size:16px;pointer-events:none}
+.search-btn{position:absolute;right:7px;top:50%;transform:translateY(-50%);background:#534AB7;border:none;border-radius:9px;padding:7px 16px;font-size:12px;font-weight:500;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;white-space:nowrap}
+.search-btn:hover{background:#3C3489}
+.search-btn:disabled{background:rgba(83,74,183,.35);cursor:not-allowed}
+.stats-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px;flex-wrap:wrap}
+.stat-pill{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.38)}
+.stat-pill strong{color:rgba(255,255,255,.62);font-weight:500}
+.sep{color:rgba(255,255,255,.18);font-size:12px}
+.body{padding:22px 24px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;max-width:1200px;margin:0 auto}
+.cats{background:#fff;border-radius:12px;padding:14px 0;height:fit-content;border:0.5px solid rgba(0,0,0,.07);position:sticky;top:68px}
+.cats-head{padding:0 14px 10px;font-size:12px;font-weight:700;color:#666;letter-spacing:.06em;text-transform:uppercase}
+.cat-item{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;cursor:pointer;transition:background .15s;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
+.cat-item:hover{background:#f5f4f8}
+.cat-item.active{background:#EEEDFE}
+.cat-left{display:flex;align-items:center;gap:8px;font-size:13px;color:#2C2C2A;line-height:1.3}
+.cat-emoji{font-size:14px;flex-shrink:0}
+.cat-item.active .cat-left{color:#3C3489;font-weight:500}
+.cat-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.cat-count{background:#f0eff8;color:#7F77DD;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px}
+.cat-item.active .cat-count{background:#CECBF6;color:#3C3489}
+.cat-check{width:15px;height:15px;border-radius:4px;border:1.5px solid #d0cfe8;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;background:#fff}
+.cat-item.active .cat-check{background:#534AB7;border-color:#534AB7}
+.cat-item.active .cat-check::after{content:'';display:block;width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+.content-area{display:flex;flex-direction:column;gap:10px}
+.content-head{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.content-title{font-size:21px;font-weight:700;color:#1a1035}
+.content-count{background:#EEEDFE;color:#534AB7;font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,.08);border-radius:12px;padding:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:7px}
+.card:hover{border-color:#AFA9EC;box-shadow:0 2px 12px rgba(83,74,183,.08)}
+.card-title{font-size:14px;font-weight:700;color:#1a1035;line-height:1.35}
+.card-desc{font-size:11px;color:#999;line-height:1.5;flex:1}
+.card-atende{font-size:10px;color:#bbb;margin-top:2px}
+.card-atende.esp{color:#E07B3A;font-weight:500}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:2px}
+.card-tag{background:#f0eff8;color:#534AB7;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;font-family:monospace}
+.card-icons{display:flex;gap:5px}
+.card-icon{width:22px;height:22px;border-radius:6px;background:#f5f4f8;display:flex;align-items:center;justify-content:center}
+.card-icon i{font-size:12px;color:#bbb}
+.card-link{background:#534AB7;color:#fff;font-size:11px;font-weight:500;padding:5px 12px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-top:4px;transition:background .15s}
+.card-link:hover{background:#3C3489}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,10,30,.6);display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;z-index:200;overflow-y:auto}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:560px;overflow:hidden;margin:auto;animation:slideUp .2s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{background:#EEEDFE;padding:13px 17px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #CECBF6}
+.modal-title{font-size:13px;font-weight:500;color:#3C3489;flex:1;padding-right:10px;line-height:1.35}
+.modal-close{background:transparent;border:none;cursor:pointer;color:#7F77DD;font-size:17px;display:flex;align-items:center;padding:4px}
+.modal-close:hover{color:#3C3489}
+.modal-body{padding:17px;font-size:13px;color:#2C2C2A;line-height:1.75;white-space:pre-wrap;max-height:460px;overflow-y:auto;min-height:60px}
+.modal-foot{padding:10px 17px;border-top:0.5px solid #ebebeb;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.modal-tags{display:flex;gap:5px;flex-wrap:wrap}
+.modal-tag{background:#EEEDFE;color:#534AB7;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+.modal-tag.esp{background:#FEF3E7;color:#E07B3A}
+.copy-btn{background:transparent;border:0.5px solid #AFA9EC;border-radius:8px;padding:6px 13px;font-size:12px;color:#534AB7;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:background .15s;white-space:nowrap}
+.copy-btn:hover{background:#EEEDFE}
+.dots{display:flex;align-items:center;gap:5px;padding:17px}
+.dot{width:6px;height:6px;border-radius:50%;background:#7F77DD;animation:bop 1.1s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bop{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1);opacity:1}}
+.hist-overlay{position:fixed;inset:0;background:rgba(15,10,30,.45);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.hist-overlay.open{opacity:1;pointer-events:all}
+.hist-panel{position:fixed;top:0;right:0;width:420px;max-width:100vw;height:100vh;background:#fff;z-index:301;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.12)}
+.hist-panel.open{transform:translateX(0)}
+.hist-head{background:#EEEDFE;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #CECBF6;flex-shrink:0}
+.hist-head-left{display:flex;align-items:center;gap:8px}
+.hist-head-left i{font-size:16px;color:#534AB7}
+.hist-head-title{font-size:14px;font-weight:500;color:#3C3489}
+.hist-head-count{background:#CECBF6;color:#3C3489;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+.hist-actions{display:flex;align-items:center;gap:8px}
+.hist-clear{background:transparent;border:0.5px solid #AFA9EC;border-radius:8px;padding:5px 12px;font-size:11px;color:#534AB7;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+.hist-clear:hover{background:#EEEDFE}
+.hist-close{background:transparent;border:none;cursor:pointer;color:#7F77DD;font-size:17px;display:flex;align-items:center;padding:4px}
+.hist-close:hover{color:#3C3489}
+.hist-body{flex:1;overflow-y:auto;padding:14px}
+.hist-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:#bbb}
+.hist-empty i{font-size:32px}
+.hist-empty p{font-size:13px}
+.hist-item{background:#f9f8fd;border:0.5px solid rgba(0,0,0,.07);border-radius:12px;padding:13px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.hist-item:hover{border-color:#AFA9EC}
+.hist-item-q{font-size:12px;font-weight:500;color:#1a1035;line-height:1.4}
+.hist-item-time{font-size:10px;color:#bbb}
+.hist-item-preview{font-size:11px;color:#888;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hist-item-actions{display:flex;gap:6px;margin-top:2px}
+.hist-act-btn{background:transparent;border:0.5px solid #AFA9EC;border-radius:7px;padding:4px 10px;font-size:11px;color:#534AB7;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px;transition:background .15s}
+.hist-act-btn:hover{background:#EEEDFE}
+.hist-act-btn.primary{background:#534AB7;color:#fff;border-color:#534AB7}
+.hist-act-btn.primary:hover{background:#3C3489}
+@media(max-width:640px){
+  .body{grid-template-columns:1fr;padding:16px}
+  .cats{position:static}
+  .hero-title{font-size:24px}
+  .cards-grid{grid-template-columns:1fr}
+  .hist-panel{width:100vw}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="tb-brand">
+    <div class="tb-icon"><i class="ti ti-plane"></i></div>
+    <div>
+      <div class="tb-name">Nu Viagens — Voos e Hotéis</div>
+      <div class="tb-sub">Guia de Atendimento Ultravioleta</div>
+    </div>
+  </div>
+  <div class="tb-right">
+    <button class="tb-hist-btn" onclick="openHist()"><i class="ti ti-history"></i>Histórico</button>
+    <div class="tb-badge">ASSISTENTE UV</div>
+  </div>
+</div>
+
+<div class="hero-wrap">
+  <div class="hero-bg"><canvas id="heroCanvas"></canvas></div>
+  <div class="hero-content">
+    <div class="hero-pill"><i class="ti ti-sparkles" style="font-size:11px"></i>Assistente de atendimento</div>
+    <div class="hero-title">Consulta de <span>Situações</span><br>de Atendimento</div>
+    <div class="hero-sub">Tudo que você precisa para atender bem, em um só lugar</div>
+    <div class="search-wrap">
+      <i class="ti ti-search s-icon"></i>
+      <textarea id="searchInput" placeholder="Buscar por situação, dúvida ou tema do cliente..." rows="1"></textarea>
+      <button class="search-btn" id="searchBtn" onclick="doSearch()">Buscar</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-pill"><strong>10</strong> categorias</div>
+      <span class="sep">·</span>
+      <div class="stat-pill"><strong>54</strong> situações</div>
+      <span class="sep">·</span>
+      <div class="stat-pill"><strong>5% cashback</strong> + 9 pts/dólar</div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  <div class="cats">
+    <div class="cats-head">Categorias</div>
+    <button class="cat-item active" id="cat-all" onclick="selectCat('all')"><span class="cat-left"><span class="cat-emoji">🗂️</span>Todas</span><span class="cat-count">54</span></button>
+    <button class="cat-item" id="cat-pre" onclick="selectCat('pre')"><span class="cat-left"><span class="cat-emoji">🔍</span>Pré-compra e elegibilidade</span><div class="cat-right"><span class="cat-count">6</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-pag" onclick="selectCat('pag')"><span class="cat-left"><span class="cat-emoji">💳</span>Pagamento e NuPay</span><div class="cat-right"><span class="cat-count">5</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-preco" onclick="selectCat('preco')"><span class="cat-left"><span class="cat-emoji">🏷️</span>Ferramentas de preço</span><div class="cat-right"><span class="cat-count">6</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-voos" onclick="selectCat('voos')"><span class="cat-left"><span class="cat-emoji">✈️</span>Reserva de voos</span><div class="cat-right"><span class="cat-count">6</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-hoteis" onclick="selectCat('hoteis')"><span class="cat-left"><span class="cat-emoji">🏨</span>Reserva de hotéis</span><div class="cat-right"><span class="cat-count">4</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-cancel" onclick="selectCat('cancel')"><span class="cat-left"><span class="cat-emoji">🔄</span>Cancelamento e remarcação</span><div class="cat-right"><span class="cat-count">7</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-irrop" onclick="selectCat('irrop')"><span class="cat-left"><span class="cat-emoji">⏰</span>Voo atrasado ou cancelado</span><div class="cat-right"><span class="cat-count">4</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-seguro" onclick="selectCat('seguro')"><span class="cat-left"><span class="cat-emoji">🛡️</span>Seguro Viagem UV</span><div class="cat-right"><span class="cat-count">7</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-docs" onclick="selectCat('docs')"><span class="cat-left"><span class="cat-emoji">📋</span>Docs, check-in e embarque</span><div class="cat-right"><span class="cat-count">6</span><span class="cat-check"></span></div></button>
+    <button class="cat-item" id="cat-links" onclick="selectCat('links')"><span class="cat-left"><span class="cat-emoji">🔗</span>Links importantes</span><div class="cat-right"><span class="cat-count">3</span><span class="cat-check"></span></div></button>
+  </div>
+  <div class="content-area">
+    <div class="content-head">
+      <span class="content-title" id="catTitle">Todas as situações</span>
+      <span class="content-count" id="catCount">48</span>
+    </div>
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+</div>
+
+<div id="modalOverlay" class="modal-overlay" style="display:none" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModalDirect()"><i class="ti ti-x"></i></button>
+    </div>
+    <div id="modalLoading" class="dots" style="display:none">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span style="font-size:12px;color:#bbb;margin-left:8px">Gerando resposta...</span>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot">
+      <div class="modal-tags" id="modalTags"></div>
+      <button class="copy-btn" onclick="copyModal()"><i class="ti ti-copy" style="font-size:12px"></i>Copiar resposta</button>
+    </div>
+  </div>
+</div>
+
+<div class="hist-overlay" id="histOverlay" onclick="closeHist()"></div>
+<div class="hist-panel" id="histPanel">
+  <div class="hist-head">
+    <div class="hist-head-left"><i class="ti ti-history"></i><span class="hist-head-title">Histórico</span><span class="hist-head-count" id="histCount">0</span></div>
+    <div class="hist-actions">
+      <button class="hist-clear" onclick="clearHist()">Limpar tudo</button>
+      <button class="hist-close" onclick="closeHist()"><i class="ti ti-x"></i></button>
+    </div>
+  </div>
+  <div class="hist-body" id="histBody"></div>
+</div>
+
+<script>
+var KB = document.getElementById('kbData').textContent;
+
+(function(){
+  var cv=document.getElementById('heroCanvas');
+  var wrap=cv.parentElement.parentElement;
+  function resize(){cv.width=wrap.offsetWidth;cv.height=wrap.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  var ctx=cv.getContext('2d');
+  var pal=['#7F77DD','#C47EE8','#3EC9C9','#F5A623','#534AB7','#E05FA3'];
+  var P=[];
+  for(var i=0;i<55;i++)P.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0003,vy:(Math.random()-.5)*.0003,r:Math.random()*1.4+.6,c:pal[Math.floor(Math.random()*pal.length)],a:Math.random()*.4+.15});
+  var chips=[{label:'GRU',city:'Sao Paulo',cx:.13,cy:.55},{label:'LIS',city:'Lisboa',cx:.87,cy:.48},{label:'GIG',city:'Rio de Janeiro',cx:.3,cy:.28},{label:'CDG',city:'Paris',cx:.68,cy:.25},{label:'NRT',city:'Toquio',cx:.78,cy:.68}];
+  var routes=[{from:0,to:1},{from:2,to:3},{from:0,to:4}];
+  var ri=0,rt=0;
+  function bez(p0,p1,c,t){var m=1-t;return{x:m*m*p0.x+2*m*t*c.x+t*t*p1.x,y:m*m*p0.y+2*m*t*c.y+t*t*p1.y};}
+  function cp(a,b){return{x:(a.cx+b.cx)/2,y:Math.min(a.cy,b.cy)-.28};}
+  function dChip(ch,W,H){
+    var cx=ch.cx*W,cy=ch.cy*H,w=62,h=32,rx=8;
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle='#AFA9EC';ctx.globalAlpha=.6;ctx.fill();ctx.globalAlpha=1;
+    var bx=cx-w/2,by=cy-h-10;
+    ctx.beginPath();ctx.moveTo(bx+rx,by);ctx.lineTo(bx+w-rx,by);ctx.quadraticCurveTo(bx+w,by,bx+w,by+rx);ctx.lineTo(bx+w,by+h-rx);ctx.quadraticCurveTo(bx+w,by+h,bx+w-rx,by+h);ctx.lineTo(bx+rx,by+h);ctx.quadraticCurveTo(bx,by+h,bx,by+h-rx);ctx.lineTo(bx,by+rx);ctx.quadraticCurveTo(bx,by,bx+rx,by);ctx.closePath();
+    ctx.fillStyle='rgba(26,20,65,.75)';ctx.fill();ctx.strokeStyle='rgba(127,119,221,.3)';ctx.lineWidth=.8;ctx.stroke();
+    ctx.textAlign='center';ctx.font='400 8px DM Sans,sans-serif';ctx.fillStyle='rgba(175,169,236,.6)';ctx.fillText(ch.city,cx,by+11);
+    ctx.font='500 11px DM Sans,sans-serif';ctx.fillStyle='rgba(238,237,254,.88)';ctx.fillText(ch.label,cx,by+24);
+  }
+  function frame(){
+    var W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);
+    var bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#120d28');bg.addColorStop(1,'#1e1548');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    var al=ctx.createRadialGradient(W*.15,H*.6,0,W*.15,H*.6,W*.55);al.addColorStop(0,'rgba(62,201,201,.09)');al.addColorStop(1,'rgba(62,201,201,0)');ctx.fillStyle=al;ctx.fillRect(0,0,W,H);
+    var ar=ctx.createRadialGradient(W*.85,H*.4,0,W*.85,H*.4,W*.5);ar.addColorStop(0,'rgba(228,95,163,.1)');ar.addColorStop(1,'rgba(228,95,163,0)');ctx.fillStyle=ar;ctx.fillRect(0,0,W,H);
+    P.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=1;if(p.x>1)p.x=0;if(p.y<0)p.y=1;if(p.y>1)p.y=0;ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();ctx.globalAlpha=1;});
+    routes.forEach(function(ro,ii){var a=chips[ro.from],b=chips[ro.to],m=cp(a,b);ctx.beginPath();ctx.moveTo(a.cx*W,a.cy*H);ctx.quadraticCurveTo(m.x*W,m.y*H,b.cx*W,b.cy*H);ctx.strokeStyle=ii===ri?'rgba(175,169,236,.22)':'rgba(127,119,221,.1)';ctx.lineWidth=1;ctx.setLineDash([5,7]);ctx.stroke();ctx.setLineDash([]);});
+    rt+=.004;if(rt>=1){rt=0;ri=(ri+1)%routes.length;}
+    var ro=routes[ri],a=chips[ro.from],b=chips[ro.to],m=cp(a,b);
+    var pos=bez({x:a.cx,y:a.cy},{x:b.cx,y:b.cy},m,rt),pos2=bez({x:a.cx,y:a.cy},{x:b.cx,y:b.cy},m,Math.min(rt+.01,1));
+    var ang=Math.atan2((pos2.y-pos.y)*H,(pos2.x-pos.x)*W);
+    ctx.save();ctx.translate(pos.x*W,pos.y*H);ctx.rotate(ang);
+    ctx.fillStyle='#EEEDFE';ctx.globalAlpha=.9;ctx.beginPath();ctx.moveTo(0,-5);ctx.lineTo(13,0);ctx.lineTo(0,3);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#AFA9EC';ctx.globalAlpha=.6;ctx.beginPath();ctx.moveTo(-1,-1);ctx.lineTo(-10,4);ctx.lineTo(-6,5);ctx.lineTo(0,2);ctx.closePath();ctx.fill();
+    ctx.globalAlpha=1;ctx.restore();
+    ctx.beginPath();ctx.arc(pos.x*W,pos.y*H,2,0,Math.PI*2);ctx.fillStyle='rgba(206,203,246,.5)';ctx.fill();
+    chips.forEach(function(ch){dChip(ch,W,H);});
+    var fade=ctx.createLinearGradient(0,H*.72,0,H);fade.addColorStop(0,'rgba(245,244,248,0)');fade.addColorStop(1,'rgba(245,244,248,1)');ctx.fillStyle=fade;ctx.fillRect(0,H*.72,W,H*.28);
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+var FIXED_HTML = {
+  pagamento: '<div style="display:flex;flex-direction:column;gap:16px">'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">CENÁRIO 1 — Compra aprovada e estornada em seguida</div>'
+    +'<div style="font-size:11px;color:#888;margin-bottom:4px">Mensagem para o cliente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Entendi que você finalizou a compra e logo depois recebeu um estorno. Vou abrir um chamado interno para verificar o que aconteceu. O prazo de retorno é de até 3 dias úteis e as atualizações chegam através do seu e-mail de cadastro.</div>'
+    +'<div style="font-size:11px;color:#888;margin-top:10px;margin-bottom:4px">🔧 Orientação para o agente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Abrir ticket: <a href="https://nubank.atlassian.net/servicedesk/customer/portal/5604/group/10108/create/27195" target="_blank" style="color:#534AB7;font-weight:500">Abrir ticket — Cenário 1</a><br>Preencher com o máximo de detalhes. O time não entra em contato com o cliente. Prazo: 3 dias úteis.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">CENÁRIO 2 — Compra negada com erro genérico ou falta de limite</div>'
+    +'<div style="font-size:11px;color:#888;margin-bottom:4px">Mensagem para o cliente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Consegue verificar para mim se você tem limite disponível no app do Nubank? Vale conferir se a barrinha de limite está ajustada para o valor necessário da reserva.</div>'
+    +'<div style="font-size:11px;color:#888;margin-top:10px;margin-bottom:4px">🔧 Orientação para o agente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Verificar se o cliente possui limite disponível e se a barrinha está ajustada. Verificar também se o cliente pagou a fatura ou mexeu na barrinha há menos de 1 hora — o app leva até 1 hora para atualizar o limite. Nesse caso, orientar a aguardar e tentar novamente. Se confirmar que tem limite, o prazo já passou e o erro persistir, abrir ticket: <a href="https://nubank.atlassian.net/servicedesk/customer/portal/5604/group/10108/create/27196" target="_blank" style="color:#534AB7;font-weight:500">Abrir ticket — Cenário 2</a><br>Prazo: 3 dias úteis.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">CENÁRIO 3 — Compra finalizada e estornada repetidas vezes</div>'
+    +'<div style="font-size:11px;color:#888;margin-bottom:4px">Mensagem para o cliente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Entendi a situação — a compra foi concluída, houve um estorno e nas tentativas seguintes está sendo negada. Vou abrir um chamado interno. O prazo de retorno é de até 3 dias úteis e as atualizações chegam através do seu e-mail de cadastro.</div>'
+    +'<div style="font-size:11px;color:#888;margin-top:10px;margin-bottom:4px">🔧 Orientação para o agente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Abrir ticket: <a href="https://nubank.atlassian.net/servicedesk/customer/portal/5604/group/10108/create/27196" target="_blank" style="color:#534AB7;font-weight:500">Abrir ticket — Cenário 3</a><br>Prazo: 3 dias úteis.</div></div>'
+    +'<div style="background:#FEF3E7;border:0.5px solid #FAC775;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#E07B3A;margin-bottom:8px">⚠️ Atenção — Boas práticas</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">O time de suporte não entra em contato com o cliente — acompanhe as respostas do ticket.<br>Relatos vagos atrasam a tratativa — preencha com o máximo de detalhes.<br>Prazo: 3 dias úteis.</div></div>'
+    +'</div>',
+  limite: '<div style="display:flex;flex-direction:column;gap:12px">'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">Contexto para o agente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">O Nu Viagens usa o mesmo limite do cartão de crédito do cliente. As compras são processadas via NuPay para crédito em até 8x sem juros. O limite consumido nas compras a prazo é o do cartão de crédito regular. O Nu Viagens não utiliza o Limite Adicional do NuPay. Não há necessidade de ação interna.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">Resposta pronta para o cliente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Sim, o Nu Viagens usa o mesmo limite do seu cartão de crédito para as compras de passagens aéreas e reservas de hotel.<br><br>As compras são feitas via NuPay para crédito em até 8x sem juros. O limite consumido é o do seu cartão de crédito regular.<br><br>o Nu Viagens não utiliza o Limite Adicional do NuPay.</div></div>'
+    +'</div>',
+  notaFiscal: '<div style="display:flex;flex-direction:column;gap:12px">'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">📋 Mensagem para o cliente</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Sobre a nota fiscal da sua viagem, vou te transferir para o time especializado que cuida dessa solicitação. Para tratar deste assunto, precisarei te transferir para o atendimento especializado de Nu Viagens. Basta aguardar aqui que logo menos irão lhe atender.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">🔧 Orientação para o agente</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">1. Usar macro: UV - Nu Viagens - Transferência para Time Especializado<br><br>2. Selecionar submotivo: Nu Viagens: Voos - Gerenciamento de reservas (ou Hotéis)<br><br>3. Transferir: Transferir > Outro squad/fila > Nu Viagens: Hopper Support > Transferir</div></div>'
+    +'</div>',
+  checkIn: '<div style="display:flex;flex-direction:column;gap:12px">'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">✈️ Check-in de Voos</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Contexto para o agente:<br>O check-in de voos não é realizado pelo app do Nubank. O cliente deve acessar o site ou app da companhia aérea usando o código localizador da reserva. O check-in online geralmente abre entre 24h e 48h antes do voo e encerra entre 1h e 2h antes da partida. O cartão de embarque é disponibilizado por e-mail ou no próprio app da cia. aérea após a conclusão do check-in.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">📋 Resposta pronta para o cliente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Sim, é totalmente possível e recomendado realizar o check-in online para viagens aéreas.<br><br>Alguns pontos importantes:<br><br>• O check-in não é feito pelo app do Nubank — você deve acessar diretamente o site ou app da companhia aérea, usando o código localizador da sua reserva.<br><br>• Geralmente, o check-in online fica disponível entre 24h e 48h antes do voo e se encerra entre 1h e 2h antes da partida.<br><br>• Ao finalizar o check-in, você receberá seu cartão de embarque por e-mail ou diretamente no app da companhia aérea.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">🏨 Check-in e Check-out de Hotéis</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Não temos na base de conhecimento a informação sobre a possibilidade de check-in e check-out 100% online pelo app do Nu Viagens.<br><br>O que podemos confirmar é que os horários e procedimentos da hospedagem — como early check-in, chegada tardia e taxas — ficam descritos nas <strong>Políticas do Hotel</strong>, que o cliente pode consultar diretamente na página da acomodação dentro do Nu Viagens.</div></div>'
+    +'</div>',
+  acionarSeguro: '<div style="display:flex;flex-direction:column;gap:12px">'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">Contexto para o agente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">O cliente precisa ter emitido o certificado do Seguro Viagem Ultravioleta antes de acionar a cobertura. Se ainda não emitiu, orientar a emitir pelo link recebido no e-mail após a compra. Se já emitiu, passar os canais de contato da seguradora (Chubb) abaixo.</div></div>'
+    +'<div style="background:#f0eff8;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:8px">📋 Resposta pronta para o cliente:</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Você deve emitir o certificado do Seguro Viagem Ultravioleta antes de acionar a cobertura em caso de emergência.<br><br>Se você já possui o certificado, entre em contato pelos canais abaixo:<br><br><strong>1. WhatsApp (todos os destinos):</strong><br>+55 (11) 2185 9680<br><br><strong>2. Telefone (ligação a cobrar de qualquer destino):</strong><br>+55 (11) 2185 9679<br><br>Recomendamos que você salve esses números em seus contatos para facilitar o acesso durante a viagem.</div></div>'
+    +'<div style="background:#FEF3E7;border:0.5px solid #FAC775;border-radius:10px;padding:14px"><div style="font-size:11px;font-weight:600;color:#E07B3A;margin-bottom:8px">⚠️ Atenção</div>'
+    +'<div style="font-size:13px;color:#2C2C2A;line-height:1.7">Esses são os canais diretos da seguradora Chubb para acionamento em emergências. O atendente do Nu Viagens não realiza o acionamento — o cliente deve contatar a Chubb diretamente pelos números acima.</div></div>'
+    +'</div>'
+};
+
+var CATS = {
+  pre:[
+    {t:'O que é o Nu Viagens e como funciona?',d:'Cliente quer entender o produto antes de comprar',tag:'pré-compra',a:'UV'},
+    {t:'Quem tem acesso ao Nu Viagens?',d:'Dúvida sobre elegibilidade — Ultravioleta, Roxinho, Espaço Família',tag:'pré-compra',a:'UV'},
+    {t:'Nu Viagens tem site ou só app?',d:'Cliente procura acesso fora do aplicativo do Nubank',tag:'pré-compra',a:'UV'},
+    {t:'Diferença entre comprar pelo Nu Viagens ou pela companhia',d:'Cliente quer entender as vantagens de cada canal',tag:'pré-compra',a:'UV'},
+    {t:'Como funciona cashback e pontos no Nu Viagens?',d:'Dúvidas sobre 5% cashback, 9pts/dólar e como visualizar',tag:'benefícios',a:'UV'},
+    {t:'O que acontece com pontos se cancelar uma reserva?',d:'Cliente quer saber sobre ajuste de pontos em caso de estorno',tag:'benefícios',a:'UV'}
+  ],
+  pag:[
+    {t:'Como funciona o pagamento no Nu Viagens?',d:'Cliente tem dúvida sobre NuPay, débito e crédito',tag:'pagamento',a:'UV'},
+    {t:'O Nu Viagens usa o cartão Ultravioleta?',d:'Cliente acredita que o pagamento é feito pelo cartão físico',tag:'pagamento',a:'UV'},
+    {t:'É possível pagar por outro meio além do NuPay?',d:'Cliente quer pagar com outro cartão, boleto ou Pix',tag:'pagamento',a:'UV'},
+    {t:'O Nu Viagens usa o limite do cartão de crédito?',d:'Dúvida sobre qual limite é consumido na compra',tag:'pagamento',a:'UV',fixedKey:'limite'},
+    {t:'Cliente com problema no pagamento — o que fazer?',d:'Estorno imediato, compra negada ou loop de tentativas',tag:'pagamento',a:'UV',fixedKey:'pagamento'}
+  ],
+  preco:[
+    {t:'O que é o Alerta de Preço e como ativar?',d:'Cliente quer monitorar preço antes de comprar',tag:'alerta-preço',a:'UV'},
+    {t:'Como editar ou excluir um Alerta de Preço?',d:'Cliente quer gerenciar alertas ativos no app',tag:'alerta-preço',a:'UV'},
+    {t:'Por que o Alerta de Preço não aparece no voo?',d:'Funcionalidade ausente em rotas de baixo volume',tag:'alerta-preço',a:'UV'},
+    {t:'O que é a Proteção contra Queda de Preço?',d:'Como funciona, quando é ativada e condições para reembolso',tag:'proteção-preço',a:'UV'},
+    {t:'Cliente pergunta sobre reembolso da Proteção de Preço',d:'Como responder durante e após os 30 dias de monitoramento',tag:'proteção-preço',a:'UV'},
+    {t:'O que é a Garantia de Melhor Preço e como acionar?',d:'Benefício manual — cliente encontrou mais barato em outro site',tag:'garantia-preço',a:'ESP'}
+  ],
+  voos:[
+    {t:'Como funciona o fluxo de compra de voo?',d:'Passo a passo completo da busca até a confirmação',tag:'reserva-voo',a:'UV'},
+    {t:'Como adicionar e cadastrar passageiros na reserva?',d:'Adultos, crianças, bebês — dados necessários no fluxo',tag:'reserva-voo',a:'UV'},
+    {t:'Como selecionar ou comprar assentos?',d:'Mapa de assentos, categorias, upgrade e trechos indisponíveis',tag:'assentos',a:'UV'},
+    {t:'Como adicionar bagagem despachada extra?',d:'Regras, limites, cobrança e o que não é possível pós-compra',tag:'bagagem',a:'UV'},
+    {t:'Pessoa com deficiência tem desconto na passagem?',d:'Nu Viagens não oferece — orientar compra direta com a cia.',tag:'reserva-voo',a:'UV'},
+    {t:'Como adicionar animal de estimação ao voo?',d:'Pet não pode ser adicionado pelo Nu Viagens — orientações',tag:'reserva-voo',a:'UV'}
+  ],
+  hoteis:[
+    {t:'Como funciona o fluxo de reserva de hotel?',d:'Passo a passo da busca até a confirmação da hospedagem',tag:'reserva-hotel',a:'UV'},
+    {t:'Diferença entre café da manhã disponível e incluso',d:'Cliente tem dúvida sobre o que está coberto na reserva',tag:'reserva-hotel',a:'UV'},
+    {t:'Hotel não reconhece a reserva do cliente',d:'Falha de transmissão — transferir para Time Especializado',tag:'reserva-hotel',a:'ESP'},
+    {t:'Cancelamento ou alteração de reserva de hotel',d:'Qualquer mudança é tratada pelo time especializado Nu Viagens',tag:'cancelamento-hotel',a:'ESP'}
+  ],
+  cancel:[
+    {t:'Quando o cancelamento é gratuito (regra 24h)?',d:'Condições da janela de 24h e compra com 7+ dias de antecedência',tag:'cancelamento',a:'ESP'},
+    {t:'Cancelamento Padrão: regras e exemplos',d:'Situações com e sem custo fora da janela gratuita',tag:'cancelamento',a:'ESP'},
+    {t:'O que é o Cancelamento Flexível e como contratar?',d:'Serviço pago, 80% de reembolso, apenas no fluxo de compra',tag:'cancel-flex',a:'UV'},
+    {t:'Como usar o Cancelamento Flexível no app?',d:'Passo a passo para acionar o serviço antes do voo',tag:'cancel-flex',a:'ESP'},
+    {t:'Quanto o cliente recebe de volta com o Cancel. Flexível?',d:'Cálculo de 80%, prazo de 7-10 dias, exemplo prático',tag:'cancel-flex',a:'UV'},
+    {t:'O que é a Remarcação Garantida?',d:'Serviço para atrasos +2h ou cancelamento pela cia. aérea',tag:'remarcação',a:'ESP'},
+    {t:'Diferença entre Cancelamento Flexível e Remarcação Garantida',d:'Quando usar cada um — motivo pessoal vs problema da cia.',tag:'remarcação',a:'UV'}
+  ],
+  irrop:[
+    {t:'O que fazer quando a companhia cancela o voo?',d:'Direitos do cliente, reacomodação e como o atendimento age',tag:'irrop',a:'ESP'},
+    {t:'Atraso de voo: direitos por faixa de tempo',d:'A partir de 1h, 2h e 4h — o que a cia. é obrigada a oferecer',tag:'irrop',a:'ESP'},
+    {t:'Cliente perdeu o voo ou a conexão',d:'Responsabilidade da cia. vs chegada atrasada do próprio cliente',tag:'irrop',a:'ESP'},
+    {t:'Companhia mudou horário do voo',d:"Status 'Atualizado' no Shuffle — o que verificar e fazer",tag:'irrop',a:'ESP'}
+  ],
+  seguro:[
+    {t:'O que é o Seguro Viagem UV e quem tem direito?',d:'Cobertura gratuita para viagens internacionais compradas pelo Nu Viagens',tag:'seguro-viagem',a:'UV'},
+    {t:'O titular precisa estar na reserva para acionar o seguro?',d:'Regras sobre titular na reserva, viajante principal e emissão',tag:'seguro-viagem',a:'UV'},
+    {t:'Como emitir o certificado do Seguro Viagem?',d:'Link enviado por e-mail após a compra, prazo e código da reserva',tag:'seguro-viagem',a:'UV'},
+    {t:'Qual o prazo de cobertura do Seguro Viagem?',d:'60 dias para ida e volta, 30 dias para somente ida',tag:'seguro-viagem',a:'UV'},
+    {t:'Cliente emitiu a apólice com dado errado',d:'Antes de viajar: reemitir pelo link. Durante a viagem: abrir Jira',tag:'seguro-viagem',a:'UV'},
+    {t:'Cliente não consegue emitir a apólice do seguro',d:'Verificar nome e endereço — se persistir, abrir ticket portal 1881',tag:'seguro-viagem',a:'UV'},
+    {t:'Como acionar o Seguro Viagem UV em caso de emergência?',d:'Canais de contato da Chubb — WhatsApp e telefone a cobrar',tag:'seguro-viagem',a:'UV',fixedKey:'acionarSeguro'}
+  ],
+  docs:[
+    {t:'Documentos aceitos em voos domésticos',d:'RG, CNH, passaporte, CTPS — menores de idade',tag:'documentos',a:'UV'},
+    {t:'Documentos para voos internacionais e visto',d:'Passaporte obrigatório, validade mínima e quando visto é exigido',tag:'documentos',a:'UV'},
+    {t:'O cliente recebe bilhete físico ou e-ticket?',d:'Passagens eletrônicas — como acessar e usar no aeroporto',tag:'check-in',a:'UV'},
+    {t:'Como fazer check-in para o voo?',d:'Online vs aeroporto, prazos de abertura e fechamento',tag:'check-in',a:'UV'},
+    {t:'Onde encontrar cartão de embarque e portão?',d:'Nu Viagens não emite — orientar app e site da companhia',tag:'embarque',a:'UV'},
+    {t:'Bagagem atrasada ou perdida no aeroporto',d:'RAB, balcão da companhia e regras de indenização ANAC',tag:'bagagem',a:'UV'}
+  ],
+  links:[
+    {t:'Reemissão da Apólice — Seguro Viagem',d:'Link para o cliente refazer a apólice com dados corretos (antes de viajar)',tag:'seguro-viagem',a:'UV',url:'https://studio-la.chubb.com/br-nuviagens-travel/'},
+    {t:'Abertura de Chamado — Jira',d:'Abrir ticket para o time interno (cliente já está em viagem ou erro técnico)',tag:'suporte-interno',a:'UV',url:'https://nubank.atlassian.net/servicedesk/customer/portal/5604'},
+    {t:'Nota Fiscal ou Recibo',d:'UV não emite NF — transferir para Time Especializado (Hopper Support)',tag:'suporte-interno',a:'ESP',fixedKey:'notaFiscal'}
+  ]
+};
+
+var ALL=[];
+Object.values(CATS).forEach(function(arr){arr.forEach(function(c){ALL.push(c);});});
+var CAT_TITLES={all:'Todas as situações',pre:'Pré-compra e elegibilidade',pag:'Pagamento e NuPay',preco:'Ferramentas de preço',voos:'Reserva de voos',hoteis:'Reserva de hotéis',cancel:'Cancelamento e remarcação',irrop:'Voo atrasado ou cancelado',seguro:'Seguro Viagem UV',docs:'Documentos, check-in e embarque',links:'Links importantes'};
+
+var chatHistory=[];
+function loadHistory(){
+  try{window.storage.get('nuv_history').then(function(r){chatHistory=r?JSON.parse(r.value):[];renderHist();}).catch(function(){chatHistory=[];renderHist();});}
+  catch(e){chatHistory=[];renderHist();}
+}
+function saveHistory(){try{window.storage.set('nuv_history',JSON.stringify(chatHistory));}catch(e){}}
+function addToHistory(q,a){
+  chatHistory.unshift({id:Date.now(),q:q,a:a,time:new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});
+  if(chatHistory.length>50)chatHistory=chatHistory.slice(0,50);
+  saveHistory();renderHist();
+}
+function renderHist(){
+  var body=document.getElementById('histBody');
+  document.getElementById('histCount').textContent=chatHistory.length;
+  if(!chatHistory.length){body.innerHTML='<div class="hist-empty"><i class="ti ti-clock-off"></i><p>Nenhuma interação salva ainda</p></div>';return;}
+  body.innerHTML=chatHistory.map(function(h){
+    return '<div class="hist-item" id="hitem-'+h.id+'">'
+      +'<div class="hist-item-q">'+h.q+'</div>'
+      +'<div class="hist-item-time"><i class="ti ti-clock" style="font-size:10px"></i> '+h.time+'</div>'
+      +'<div class="hist-item-preview">'+(typeof h.a==='string'?h.a.replace(/<[^>]+>/g,'').substring(0,120)+'...':'')+'</div>'
+      +'<div class="hist-item-actions">'
+      +'<button class="hist-act-btn primary" onclick="reuseHist('+h.id+')"><i class="ti ti-eye" style="font-size:11px"></i>Ver</button>'
+      +'<button class="hist-act-btn" onclick="copyHist('+h.id+')"><i class="ti ti-copy" style="font-size:11px"></i>Copiar</button>'
+      +'<button class="hist-act-btn" onclick="deleteHist('+h.id+')" style="margin-left:auto;color:#E05FA3;border-color:#E05FA3"><i class="ti ti-trash" style="font-size:11px"></i></button>'
+      +'</div></div>';
+  }).join('');
+}
+function openHist(){document.getElementById('histOverlay').classList.add('open');document.getElementById('histPanel').classList.add('open');}
+function closeHist(){document.getElementById('histOverlay').classList.remove('open');document.getElementById('histPanel').classList.remove('open');}
+function reuseHist(id){
+  var h=chatHistory.find(function(x){return x.id===id;});if(!h)return;
+  closeHist();
+  document.getElementById('modalTitle').textContent=h.q;
+  document.getElementById('modalTags').innerHTML='<span class="modal-tag">histórico</span>';
+  document.getElementById('modalLoading').style.display='none';
+  var el=document.getElementById('modalBody');
+  if(h.a&&h.a.indexOf('<')!==-1){el.style.whiteSpace='normal';el.innerHTML=h.a;}
+  else{el.style.whiteSpace='pre-wrap';el.textContent=h.a;}
+  document.getElementById('modalOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function copyHist(id){
+  var h=chatHistory.find(function(x){return x.id===id;});if(!h)return;
+  var txt=typeof h.a==='string'?h.a.replace(/<[^>]+>/g,''):h.a;
+  try{var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);}
+  catch(e){if(navigator.clipboard)navigator.clipboard.writeText(txt);}
+}
+function deleteHist(id){chatHistory=chatHistory.filter(function(x){return x.id!==id;});saveHistory();renderHist();}
+function clearHist(){if(!confirm('Limpar todo o histórico?'))return;chatHistory=[];saveHistory();renderHist();}
+
+function callAPI(msg){
+  return fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:KB,messages:[{role:'user',content:msg}]})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.error)return 'Erro: '+d.error.message;
+    var t=d.content&&d.content.find(function(b){return b.type==='text';});
+    return t?t.text:'Não foi possível gerar resposta.';
+  });
+}
+
+var PROMPT_SUFFIX = '\n\nResponda com os dois blocos obrigatórios: "Contexto para o agente:" e "Resposta pronta para o cliente:" Use o tom Ultravioleta.';
+
+function renderCards(cards){
+  document.getElementById('cardsGrid').innerHTML=cards.map(function(c){
+    var idx=ALL.indexOf(c);
+    if(c.url){
+      return '<div class="card"><div class="card-title">'+c.t+'</div><div class="card-desc">'+c.d+'</div>'
+        +'<div class="card-foot" style="margin-top:6px"><span class="card-tag">'+c.tag+'</span></div>'
+        +'<a class="card-link" href="'+c.url+'" target="_blank"><i class="ti ti-external-link" style="font-size:11px"></i>Abrir link</a></div>';
+    }
+    return '<div class="card" onclick="openCard('+idx+')">'
+      +'<div class="card-title">'+c.t+'</div><div class="card-desc">'+c.d+'</div>'
+      +'<div class="card-atende'+(c.a==='ESP'?' esp':'')+'">'+( c.a==='ESP'?'⚡ Time Especializado':'Atendimento Ultravioleta')+'</div>'
+      +'<div class="card-foot"><span class="card-tag">'+c.tag+'</span>'
+      +'<div class="card-icons"><div class="card-icon"><i class="ti ti-message-circle"></i></div><div class="card-icon"><i class="ti ti-sparkles"></i></div></div>'
+      +'</div></div>';
+  }).join('');
+}
+
+var currentCat='all';
+function selectCat(cat){
+  if(cat!=='all'&&currentCat===cat)cat='all';
+  currentCat=cat;
+  document.querySelectorAll('.cat-item').forEach(function(e){e.classList.remove('active');});
+  document.getElementById('cat-'+cat).classList.add('active');
+  var cards=cat==='all'?ALL:CATS[cat]||[];
+  document.getElementById('catTitle').textContent=CAT_TITLES[cat]||cat;
+  document.getElementById('catCount').textContent=cards.length;
+  renderCards(cards);
+}
+
+function showModal(title,tags,content,isHtml){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalTags').innerHTML=tags;
+  document.getElementById('modalLoading').style.display='none';
+  var el=document.getElementById('modalBody');
+  if(isHtml){el.style.whiteSpace='normal';el.innerHTML=content;}
+  else{el.style.whiteSpace='pre-wrap';el.textContent=content;}
+  document.getElementById('modalOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+  addToHistory(title,content);
+}
+
+function openCard(idx){
+  var c=ALL[idx];if(!c)return;
+  var tags='<span class="modal-tag">'+c.tag+'</span><span class="modal-tag">Nu Viagens</span>'+(c.a==='ESP'?'<span class="modal-tag esp">⚡ Time Especializado</span>':'');
+  if(c.fixedKey&&FIXED_HTML[c.fixedKey]){showModal(c.t,tags,FIXED_HTML[c.fixedKey],true);return;}
+  document.getElementById('modalTitle').textContent=c.t;
+  document.getElementById('modalTags').innerHTML=tags;
+  document.getElementById('modalBody').textContent='';
+  document.getElementById('modalLoading').style.display='flex';
+  document.getElementById('modalOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+  callAPI('Situação: '+c.t+'. Contexto: '+c.d+'.'+PROMPT_SUFFIX)
+  .then(function(t){
+    document.getElementById('modalLoading').style.display='none';
+    var el=document.getElementById('modalBody');el.style.whiteSpace='pre-wrap';el.textContent=t;
+    addToHistory(c.t,t);
+  }).catch(function(){
+    document.getElementById('modalLoading').style.display='none';
+    document.getElementById('modalBody').textContent='Erro ao conectar. Tente novamente.';
+  });
+}
+
+function resetSearch(){
+  var si=document.getElementById('searchInput');
+  si.value='';si.style.height='48px';si.style.paddingRight='110px';si.style.paddingBottom='13px';
+  document.getElementById('searchBtn').style.top='50%';document.getElementById('searchBtn').style.transform='translateY(-50%)';document.getElementById('searchBtn').style.bottom='auto';
+}
+
+function doSearch(){
+  var q=document.getElementById('searchInput').value.trim();if(!q)return;
+  var btn=document.getElementById('searchBtn');btn.disabled=true;btn.textContent='Buscando...';
+  var qLow=q.toLowerCase();
+  var tags='<span class="modal-tag">busca livre</span><span class="modal-tag">Nu Viagens</span>';
+  var isPagamento=['estorno','compra negada','problema no pagamento','falha no pagamento','falha de pagamento','erro no pagamento'].some(function(k){return qLow.indexOf(k)!==-1;});
+  var isNotaFiscal=['nota fiscal','recibo','comprovante fiscal'].some(function(k){return qLow.indexOf(k)!==-1;});
+  var isAcionarSeguro=['acionar seguro','emergencia','emergência','contato seguro','telefone seguro','whatsapp seguro','chubb'].some(function(k){return qLow.indexOf(k)!==-1;});
+  if(isPagamento){showModal('Problema no pagamento',tags,FIXED_HTML.pagamento,true);}
+  else if(isNotaFiscal){showModal('Nota Fiscal ou Recibo',tags,FIXED_HTML.notaFiscal,true);}
+  else if(isAcionarSeguro){showModal('Como acionar o Seguro Viagem UV em caso de emergência?',tags,FIXED_HTML.acionarSeguro,true);}
+  else{
+    document.getElementById('modalTitle').textContent=q;
+    document.getElementById('modalTags').innerHTML=tags;
+    document.getElementById('modalBody').textContent='';
+    document.getElementById('modalLoading').style.display='flex';
+    document.getElementById('modalOverlay').style.display='flex';
+    document.body.style.overflow='hidden';
+    callAPI(q+PROMPT_SUFFIX)
+    .then(function(t){
+      document.getElementById('modalLoading').style.display='none';
+      var el=document.getElementById('modalBody');el.style.whiteSpace='pre-wrap';el.textContent=t;
+      addToHistory(q,t);
+    }).catch(function(){
+      document.getElementById('modalLoading').style.display='none';
+      document.getElementById('modalBody').textContent='Erro ao conectar. Tente novamente.';
+    });
+  }
+  btn.disabled=false;btn.textContent='Buscar';
+  resetSearch();
+}
+
+function closeModal(e){if(e.target===e.currentTarget)closeModalDirect();}
+function closeModalDirect(){document.getElementById('modalOverlay').style.display='none';document.body.style.overflow='';}
+
+function copyModal(){
+  var el=document.getElementById('modalBody');
+  var fullText=el.innerText||el.textContent;
+  var textToCopy=fullText;
+  var marker='Resposta pronta para o cliente:';
+  var idx=fullText.indexOf(marker);
+  if(idx!==-1){textToCopy=fullText.substring(idx+marker.length).trim();}
+  textToCopy=textToCopy.replace(/\n{2,}/g,'\n').trim();
+  if(!textToCopy)return;
+  var b=event.currentTarget;var o=b.innerHTML;
+  try{var ta=document.createElement('textarea');ta.value=textToCopy;ta.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    b.innerHTML='<i class="ti ti-check" style="font-size:12px"></i>Copiado!';setTimeout(function(){b.innerHTML=o;},1800);
+  }catch(e2){if(navigator.clipboard)navigator.clipboard.writeText(textToCopy).then(function(){b.innerHTML='<i class="ti ti-check" style="font-size:12px"></i>Copiado!';setTimeout(function(){b.innerHTML=o;},1800);});}
+}
+
+var searchEl=document.getElementById('searchInput');
+var searchBtn=document.getElementById('searchBtn');
+searchEl.addEventListener('input',function(){
+  this.style.height='auto';
+  var sH=48,scH=this.scrollHeight;
+  if(scH>sH){this.style.height=scH+'px';this.style.paddingRight='18px';this.style.paddingBottom='44px';searchBtn.style.top='auto';searchBtn.style.transform='none';searchBtn.style.bottom='7px';}
+  else{this.style.height=sH+'px';this.style.paddingRight='110px';this.style.paddingBottom='13px';searchBtn.style.top='50%';searchBtn.style.transform='translateY(-50%)';searchBtn.style.bottom='auto';}
+});
+searchEl.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSearch();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModalDirect();closeHist();}});
+selectCat('all');
+loadHistory();
+</script>
+</body>
+</html>
